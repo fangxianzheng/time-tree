@@ -64,7 +64,7 @@ class TimeTree {
     for(let year in this.monthArr) {
 
       // 是否是闰年
-      let yearNum =  Number(year)
+      let yearNum =  parseInt(year)
       let isLeapYear = (yearNum % 4 == 0 && yearNum % 100 != 0) || yearNum % 400 == 0
       obj[year] = {}
       this.monthArr[year].forEach((month) => {
