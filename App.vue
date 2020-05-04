@@ -9,13 +9,13 @@
 
       let time = new TimeTree({
         startDate: '2017-03-20 08:25',
-        endDate: '2020-04-27 20:06'
+        endDate: '2020-04-27 20:45'
       })
 
       // console.log(time)
       // console.log(time.getYearArr())
       // console.log(time.getMonthArr())
-      console.log(time.getDayArr())
+      console.log(time.getMinuteArr())
 
     }
   }
