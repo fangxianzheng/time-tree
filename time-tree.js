@@ -1,5 +1,5 @@
 class TimeTree {
-  constructor({startDate, endDate, span = 10}) {
+  constructor({startDate, endDate, span = 1}) {
     this.startDate = this.toDateObj(startDate)
     this.endDate = this.toDateObj(endDate)
     this.span = span
@@ -46,7 +46,13 @@ class TimeTree {
 
     this.yearArr.forEach((year) => {
       obj[year] = []
-      if (year == this.startYear) {
+
+      // 如果是一年内
+      if (this.startYear == this.endYear) {
+        for (let i = this.startMonth; i<= this.endMonth; i ++) {
+          obj[year].push(i)
+        }
+      } else if (year == this.startYear) {
         for (let i = this.startMonth; i<= 12; i ++) {
           obj[year].push(i)
         }
@@ -85,7 +91,12 @@ class TimeTree {
           lastDay = isLeapYear ? 29 : 28
         }
 
-        if (year == this.startYear && month == this.startMonth) {
+        // 如果时间跨度是同一个月
+        if (this.startYear == this.endYear && this.startMonth == this.endMonth) {
+          for (let i = this.startDay; i <= this.endDay; i ++) {
+            obj[year][month].push(i)
+          }
+        } else if (year == this.startYear && month == this.startMonth) {
           for (let i = this.startDay; i <= lastDay; i ++) {
             obj[year][month].push(i)
           }
@@ -113,7 +124,13 @@ class TimeTree {
         obj[year][month] = {}
         this.dayArr[year][month].forEach((day) => {
           obj[year][month][day] = []
-          if (year == this.startYear && month == this.startMonth && day == this.startDay) {
+
+          // 如果时间跨度是一天内
+          if (this.startYear == this.endYear && this.startMonth == this.endMonth && this.startDay == this.endDay) {
+            for (let i = this.startHour; i <= this.endHour; i ++) {
+              obj[year][month][day].push(i)
+            }
+          } else if (year == this.startYear && month == this.startMonth && day == this.startDay) {
             for (let i = this.startHour; i <= 24; i ++) {
               obj[year][month][day].push(i)
             }
@@ -134,6 +151,8 @@ class TimeTree {
 
   getMinuteArr () {
     let obj = {}
+    let startMinutes = Math.round(Math.ceil(this.startMinutes / this.span) * this.span)
+    let endMinutes = Math.round(Math.floor(this.endMinutes / this.span) * this.span)
     for (let year in this.hourArr) {
       obj[year] = {}
       for (let month in this.hourArr[year]) {
@@ -142,13 +161,17 @@ class TimeTree {
           obj[year][month][day] = {}
           this.hourArr[year][month][day].forEach((hour) => {
             obj[year][month][day][hour] = []
-            if (year == this.startYear && month == this.startMonth && day == this.startDay && hour == this.startHour) {
-              let startMinutes = Math.round(Math.ceil(this.startMinutes / this.span) * this.span)
+
+            // 如果时间跨度是一个小智之内
+            if (this.startYear == this.endYear && this.startMonth == this.endMonth && this.startDay == this.endDay && this.startHour == this.endHour) {
+              for (let i = startMinutes; i <= endMinutes; i += this.span) {
+                obj[year][month][day][hour].push(i)
+              }
+            } else if (year == this.startYear && month == this.startMonth && day == this.startDay && hour == this.startHour) {
               for (let i = startMinutes; i <= 59; i += this.span) {
                 obj[year][month][day][hour].push(i)
               }
             } else if (year == this.endYear && month == this.endMonth && day == this.endDay && hour == this.endHour) {
-              let endMinutes = Math.round(Math.floor(this.endMinutes / this.span) * this.span)
               for (let i = 0; i <= endMinutes; i += this.span) {
                 obj[year][month][day][hour].push(i)
               }
