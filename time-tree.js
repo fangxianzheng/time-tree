@@ -49,15 +49,15 @@ class TimeTree {
 
       // 如果是一年内
       if (this.startYear == this.endYear) {
-        for (let i = this.startMonth; i<= this.endMonth; i ++) {
+        for (let i = this.startMonth; i <= this.endMonth; i ++) {
           obj[year].push(i)
         }
       } else if (year == this.startYear) {
-        for (let i = this.startMonth; i<= 12; i ++) {
+        for (let i = this.startMonth; i <= 12; i ++) {
           obj[year].push(i)
         }
       } else if (year == this.endYear) {
-        for (let i = 1; i<= this.endMonth; i ++) {
+        for (let i = 1; i <= this.endMonth; i ++) {
           obj[year].push(i)
         }
       } else {
